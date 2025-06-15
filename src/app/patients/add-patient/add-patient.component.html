@@ -1,0 +1,146 @@
+<div class="row">
+  <h2>Add Patient</h2>
+  <div class="col-10">
+    <form
+      [formGroup]="patientForm"
+      (ngSubmit)="onSubmit()"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <!-- Patient Name -->
+      <div class="form-group mb-2">
+        <label for="patient_name">Patient Name:</label>
+        <input
+          type="text"
+          id="patient_name"
+          class="form-control"
+          formControlName="patient_name"
+        />
+        <div
+          class="text-danger"
+          *ngIf="f['patient_name'].touched && f['patient_name'].invalid"
+        >
+          Name is required.
+        </div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-group mb-2">
+        <label for="dob">Date of Birth:</label>
+        <input
+          type="date"
+          id="dob"
+          class="form-control"
+          formControlName="date_of_birth"
+          (change)="calculateAge()"
+          [max]="today"
+        />
+        <div
+          class="text-danger"
+          *ngIf="f['date_of_birth'].touched && f['date_of_birth'].invalid"
+        >
+          DOB is required.
+        </div>
+      </div>
+
+      <!-- Age (read-only) -->
+      <div class="form-group mb-2">
+        <label>Age:</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="age"
+          readonly
+        />
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group mb-2">
+        <label for="phone">Phone:</label>
+        <input
+          type="tel"
+          id="phone"
+          class="form-control"
+          formControlName="phone"
+        />
+        <div
+          class="text-danger"
+          *ngIf="f['phone'].touched && f['phone'].invalid"
+        >
+          Enter a valid 10-digit phone number.
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group mb-2">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+        />
+        <div
+          class="text-danger"
+          *ngIf="f['email'].touched && f['email'].invalid"
+        >
+          Enter a valid email.
+        </div>
+      </div>
+
+      <!-- Gender Dropdown -->
+      <div class="form-group mb-2">
+        <label for="gender">Gender:</label>
+        <select id="gender" class="form-control" formControlName="gender">
+          <option value="">Select Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+        <div
+          class="text-danger"
+          *ngIf="f['gender'].touched && f['gender'].invalid"
+        >
+          Please select gender.
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group mb-2">
+        <label for="address">Address:</label>
+        <textarea
+          id="address"
+          class="form-control"
+          formControlName="address"
+        ></textarea>
+        <div
+          class="text-danger"
+          *ngIf="f['address'].touched && f['address'].invalid"
+        >
+          Address is required.
+        </div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group mb-3">
+        <label>Upload Report:</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileChange($event)"
+          accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+        />
+        <div class="text-danger" *ngIf="fileError">
+          {{ fileError }}
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="patientForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
